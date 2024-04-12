@@ -1,0 +1,64 @@
+﻿@model TableModel
+@{
+    ViewData["Title"] = "Table binding";
+}
+
+<form asp-antiforgery="true">
+    <div asp-validation-summary="ModelOnly" class="alert-danger"></div>
+    <div>
+        <input asp-for="@Model.Title" />
+        <span asp-validation-for="@Model.Title" class="alert-danger"></span>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Rows.Count; i++)
+            {
+                RowModel row = Model.Rows[i];
+                <input type="hidden" asp-for="Rows[i].Id" />
+                <tr>
+                    <td>@row.Id</td>
+                    <td>
+                        <input asp-for="Rows[i].Name" />
+                        <span asp-validation-for="Rows[i].Name" class="alert-danger"></span>
+                    </td>
+                    <td>
+                        <input asp-for="Rows[i].Email" />
+                        <span asp-validation-for="Rows[i].Email" class="alert-danger"></span>
+                    </td>
+                    <td>
+                        <input asp-for="Rows[i].Checked" type="checkbox" />
+                    </td>
+                </tr>
+            }
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" asp-controller="Home" asp-action="Add" value="Add rows" />
+                    <input asp-for="@Model.AddRowsCount" />
+                    <span asp-validation-for="@Model.AddRowsCount" class="alert-danger" />
+                </td>
+                <td></td>
+                <td>
+                    <input type="submit" asp-controller="Home" asp-action="Delete" value="Delete selected" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    @if (!string.IsNullOrEmpty(ViewBag.Message))
+    {
+        <div>@ViewBag.Message</div>
+    }
+    <div>
+        <input type="submit" asp-controller="Home" asp-action="Edit" value="Save changes" />
+        <a asp-controller="Home" asp-action="Index">Return</a>
+    </div>
+</form>

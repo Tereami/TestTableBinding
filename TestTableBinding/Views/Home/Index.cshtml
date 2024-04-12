@@ -1,0 +1,39 @@
+﻿@model TableModel
+@{
+    ViewData["Title"] = "Table binding";
+}
+
+<div>
+    <h1>
+        @Model.Title
+    </h1>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Rows.Count; i++)
+        {
+            RowModel row = Model.Rows[i];
+            <tr>
+                <td>
+                    @row.Id
+                </td>
+                <td>
+                    @row.Name
+                </td>
+                <td>
+                    @row.Email
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div>
+    <a asp-controller="Home" asp-action="Edit">Edit table</a>
+</div>
